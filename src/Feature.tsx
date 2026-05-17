@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MeshToasts,
   pushToast,
   useDirectedEdges,
   useEventLog,
   useNamedPeer,
+  useRateLimit,
   type MeshConfig,
   type YRoom,
 } from "@baditaflorin/mesh-common";
@@ -39,7 +40,7 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   const { name, setName, names, nameOf, myName } = useNamedPeer(config, room);
   const log = useEventLog<Cheer>(room, "cheers");
   const edges = useDirectedEdges(room, "cheer-edges");
-  const lastSendAt = useRef(0);
+  const limit = useRateLimit({ max: 1, perMs: RATE_LIMIT_MS });
   const [target, setTarget] = useState<string>("");
   const [now, setNow] = useState(() => Date.now());
 
@@ -54,9 +55,8 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
 
   const send = (emoji: string) => {
     if (!trimmed || !validTarget) return;
+    if (!limit.take()) return;
     const t = Date.now();
-    if (t - lastSendAt.current < RATE_LIMIT_MS) return;
-    lastSendAt.current = t;
     const cheer: Cheer = {
       id: Math.random().toString(36).slice(2, 12),
       peerId: room.peerId,
