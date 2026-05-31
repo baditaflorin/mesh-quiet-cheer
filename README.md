@@ -1,7 +1,7 @@
 # mesh-quiet-cheer
 
 [![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-quiet-cheer-ff5277)](https://baditaflorin.github.io/mesh-quiet-cheer/)
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-quiet-cheer/blob/main/package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-quiet-cheer/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 > Send hearts and claps to a chosen peer — directed positive reactions, mesh-native.
